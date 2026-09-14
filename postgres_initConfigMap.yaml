@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: novabank-prod
+data:
+  init.sql: |
+    CREATE USER accountdb_user WITH PASSWORD 'accountdb123';
+    CREATE DATABASE accountdb OWNER accountdb_user;
+
+    CREATE USER customerdb_user WITH PASSWORD 'customerdb123';
+    CREATE DATABASE customerdb OWNER customerdb_user;
