@@ -30,9 +30,7 @@ spec:
         - name: frontend
           image: charanpolamarasetti/novabank-frontend:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
-            capabilities:
-              drop: ["ALL"]
