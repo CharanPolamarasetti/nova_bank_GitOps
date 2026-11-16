@@ -1,3 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: auto-ebs-sc
+provisioner: ebs.csi.eks.amazonaws.com
+volumeBindingMode: WaitForFirstConsumer
+parameters:
+  type: gp3
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -8,50 +17,42 @@ metadata:
 spec:
   serviceName: postgres
   replicas: 1
-
   selector:
     matchLabels:
       app: postgres
-
   template:
     metadata:
       labels:
         app: postgres
-
     spec:
       containers:
         - name: postgres
           image: postgres:16-alpine
-
           ports:
             - containerPort: 5432
-
           env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: postgres-config
                   key: POSTGRES_DB
-
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_USER
-
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
-
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
-
             - name: postgres-init
               mountPath: /docker-entrypoint-initdb.d
-
           readinessProbe:
             exec:
               command:
@@ -60,7 +61,6 @@ spec:
                 - postgres
             initialDelaySeconds: 10
             periodSeconds: 5
-
           livenessProbe:
             exec:
               command:
@@ -69,18 +69,17 @@ spec:
                 - postgres
             initialDelaySeconds: 30
             periodSeconds: 10
-
       volumes:
         - name: postgres-init
           configMap:
             name: postgres-init
-
   volumeClaimTemplates:
     - metadata:
         name: postgres-data
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: auto-ebs-sc
         resources:
           requests:
             storage: 5Gi
