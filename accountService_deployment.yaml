@@ -29,7 +29,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: account-service
-          image: charanpolamarasetti/novabank-account-service:latest
+          image: 285065163560.dkr.ecr.ap-south-1.amazonaws.com/novabank/account-service:2
           ports:
             - containerPort: 8082
           envFrom:
