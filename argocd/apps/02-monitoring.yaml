@@ -13,7 +13,7 @@ spec:
       helm:
         releaseName: kps
         valueFiles: [$values/platform/monitoring/kps-values.yaml]
-    - repoURL: https://github.com/CharanPolamarasetti/nova-bank-GitOps.git
+    - repoURL: https://github.com/CharanPolamarasetti/nova_bank_GitOps.git
       targetRevision: master
       ref: values
   destination: {server: https://kubernetes.default.svc, namespace: monitoring}
