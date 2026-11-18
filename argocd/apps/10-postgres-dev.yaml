@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/CharanPolamarasetti/nova-bank-GitOps.git
-    targetRevision: main
+    targetRevision: master
     path: charts/postgres-dev
     helm: {valueFiles: [../../envs/dev/postgres.yaml]}
   destination: {server: https://kubernetes.default.svc, namespace: novabank-dev}
