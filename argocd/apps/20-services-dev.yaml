@@ -16,7 +16,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: __GITOPS_REPO_URL__
+        repoURL: https://github.com/CharanPolamarasetti/nova-bank-GitOps.git
         targetRevision: main
         path: charts/nova-service
         helm:
