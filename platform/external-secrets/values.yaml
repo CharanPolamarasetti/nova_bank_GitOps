@@ -2,4 +2,4 @@ installCRDs: true
 serviceAccount:
   name: external-secrets
   annotations:
-    eks.amazonaws.com/role-arn: __ESO_ROLE_ARN__
+    eks.amazonaws.com/role-arn: arn:aws:iam::285065163560:role/novabank-prod-eso-irsa
