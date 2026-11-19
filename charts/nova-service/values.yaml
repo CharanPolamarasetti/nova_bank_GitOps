@@ -24,6 +24,11 @@ probes:
   periodSeconds: 10
   failureThreshold: 6
 
+startupProbe:
+  enabled: false
+  periodSeconds: 10
+  failureThreshold: 30
+
 resources:
   requests: {cpu: 100m, memory: 256Mi}
   limits: {memory: 512Mi}

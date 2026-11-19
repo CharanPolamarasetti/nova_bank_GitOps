@@ -66,6 +66,16 @@ spec:
                 command: ["sleep", "{{ .Values.preStopSleepSeconds }}"]
           {{- end }}
           {{- $p := .Values.probes }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            {{- if eq $p.type "http" }}
+            httpGet: {path: {{ $p.path }}, port: http}
+            {{- else }}
+            tcpSocket: {port: http}
+            {{- end }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          {{- end }}
           readinessProbe:
             {{- if eq $p.type "http" }}
             httpGet: {path: {{ $p.path }}, port: http}
